@@ -1,0 +1,16 @@
+<launch>
+  <arg name="world_name" default="empty.world"/>
+  <arg name="show_rviz" default="false"/>
+  <arg name="gui" default="true"/>
+  <arg name="robot_namespace" default="husky"/>
+
+  <!-- launch gazebo world -->
+  <include file="$(find fkie_gazebo_worlds_icra2022)/launch/gazebo.launch">
+    <arg name="capability_group" value="base"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <!-- Spawn mobile manipulator robot with husky base and panda arm -->
+  <include file="$(find fkie_husky_manipulation_simulation)/launch/test.launch"/>
+</launch>
