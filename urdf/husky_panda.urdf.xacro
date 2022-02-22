@@ -30,7 +30,7 @@
 
   <link name="panda_mount_link" />
 
-  <!-- <xacro:gazebo-joint joint="$(arg arm_id)_joint1" transmission="hardware_interface/EffortJointInterface" />
+  <xacro:gazebo-joint joint="$(arg arm_id)_joint1" transmission="hardware_interface/EffortJointInterface" />
   <xacro:gazebo-joint joint="$(arg arm_id)_joint2" transmission="hardware_interface/EffortJointInterface" />
   <xacro:gazebo-joint joint="$(arg arm_id)_joint3" transmission="hardware_interface/EffortJointInterface" />
   <xacro:gazebo-joint joint="$(arg arm_id)_joint4" transmission="hardware_interface/EffortJointInterface" />
@@ -39,7 +39,7 @@
   <xacro:gazebo-joint joint="$(arg arm_id)_joint7" transmission="hardware_interface/EffortJointInterface" />
 
   <xacro:transmission-franka-state arm_id="$(arg arm_id)" />
-  <xacro:transmission-franka-model arm_id="$(arg arm_id)" root="$(arg arm_id)_joint1" tip="$(arg arm_id)_joint8" />  -->
+  <xacro:transmission-franka-model arm_id="$(arg arm_id)" root="$(arg arm_id)_joint1" tip="$(arg arm_id)_joint8" />
 
 
   <!-- <gazebo>

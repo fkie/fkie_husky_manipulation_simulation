@@ -6,7 +6,7 @@
   <arg name="arm_id" default="panda" doc="Name of the panda robot to spawn" />
   <arg name="x" default="6" doc="How far forward to place the base of the husky robot in [m]?" />
   <arg name="y" default="-15" doc="How far leftwards to place the base of the husky robot in [m]?" />
-  <arg name="z" default="0.5" doc="How far upwards to place the base of the husky robot in [m]?" />
+  <arg name="z" default="0.15" doc="How far upwards to place the base of the husky robot in [m]?" />
   <arg name="yaw" default="2.626509" doc="How much to rotate the base of the husky robot around its Z-axis in [rad]?" />
   <arg name="initial_joint_positions" doc="Initial joint configuration of the panda. Specify as a list of name/value pairs in form of '-J [name-of-joint] [value-in-rad]'. Default is a 90 degree bend in the elbow" default="-J $(arg arm_id)_joint1 0
                 -J $(arg arm_id)_joint2 0
