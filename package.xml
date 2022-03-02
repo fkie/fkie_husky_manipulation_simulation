@@ -20,6 +20,7 @@
   <exec_depend>fkie_gazebo_worlds_icra2022</exec_depend>
   <exec_depend>husky_description</exec_depend>
   <exec_depend>franka_description</exec_depend>
+  <exec_depend>franka_gazebo</exec_depend>
   <exec_depend>fkie_node_manager</exec_depend>
 
 </package>
