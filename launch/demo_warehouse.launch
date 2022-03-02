@@ -1,6 +1,6 @@
 <launch>
   <arg name="world_name" default="warehouse_icra_large.world"/>
-  <arg name="show_rviz" default="false"/>
+  <arg name="show_rviz" default="true"/>
   <arg name="gui" default="true"/>
   <arg name="robot_namespace" default="husky"/>
 
@@ -12,5 +12,15 @@
   </include>
 
   <!-- Spawn mobile manipulator robot with husky base and panda arm -->
-  <include file="$(find fkie_husky_manipulation_simulation)/launch/test.launch"/>
+  <include file="$(find fkie_husky_manipulation_simulation)/launch/test.launch">
+  <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+    <arg name="capability_group" value="base"/>
+  </include>
+
+
+  <node if="$(arg show_rviz)" name="rviz_husky_arm" pkg="rviz" type="rviz" ex-launch-prefix="gdb -ex run --args" args="-d $(find fkie_husky_manipulation_simulation)/rviz/husky_manipulation.rviz">
+    <param name="capability_group" value="rviz"/>
+  </node>
+
+
 </launch>

@@ -2,7 +2,7 @@
   <arg name="world_name" default="empty.world"/>
   <arg name="show_rviz" default="false"/>
   <arg name="gui" default="true"/>
-  <arg name="robot_namespace" default="husky"/>
+  <arg name="robot_namespace" default="mob_manip"/>
 
   <!-- launch gazebo world -->
   <include file="$(find fkie_gazebo_worlds_icra2022)/launch/gazebo.launch">
@@ -12,5 +12,10 @@
   </include>
 
   <!-- Spawn mobile manipulator robot with husky base and panda arm -->
-  <include file="$(find fkie_husky_manipulation_simulation)/launch/test.launch"/>
+  
+  <include file="$(find fkie_husky_manipulation_simulation)/launch/test_panda_only.launch"/>
+<!--   <include file="$(find fkie_husky_manipulation_simulation)/launch/test_panda_only_ns.launch"/> -->
+    
+    
+  
 </launch>
