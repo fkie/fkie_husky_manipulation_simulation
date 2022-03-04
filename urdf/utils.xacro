@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+  <!-- ========================================================== -->
+  <!-- Adds the required tags to simulate one joint in gazebo     -->
+  <!--                                                            -->
+  <!-- joint - Name of the panda joint to simulate                -->
+  <!-- transmission - type of the transmission of the joint       -->
+  <!-- ========================================================== -->
+  <xacro:macro name="gazebo-joint" params="joint transmission:=hardware_interface/EffortJointInterface">
+    <gazebo reference="${joint}">
+      <!-- Needed for ODE to output external wrenches on joints -->
+      <provideFeedback>true</provideFeedback>
+    </gazebo>
+
+    <transmission name="${joint}_transmission">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${joint}">
+        <hardwareInterface>${transmission}</hardwareInterface>
+      </joint>
+      <actuator name="${joint}_motor">
+        <hardwareInterface>${transmission}</hardwareInterface>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:macro name="gazebo-friction" params="link mu">
+    <gazebo reference="${link}">
+      <collision>
+        <max_contacts>10</max_contacts>
+        <surface>
+          <contact>
+            <ode>
+              <!-- These two parameter need application specific tuning. -->
+              <!-- Usually you want no "snap out" velocity and a generous -->
+              <!-- penetration depth to keep the grasping stable -->
+              <max_vel>0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+          <friction>
+            <ode>
+              <mu>0.61</mu>
+              <mu2>0.61</mu2>
+            </ode>
+          </friction>
+          <bounce/>
+        </surface>
+      </collision>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- <gazebo reference="panda_link0">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo>
+  <gazebo reference="panda_link1">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo>
+  <gazebo reference="panda_link2">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo>
+  <gazebo reference="panda_link3">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo>
+  <gazebo reference="panda_link4">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo>
+  <gazebo reference="panda_link5">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo>
+  <gazebo reference="panda_link6">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo>
+  <gazebo reference="panda_link7">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo>
+  <gazebo reference="panda_link8">
+    <mu1>0.61</mu1>
+    <mu2>0.61</mu2>
+  </gazebo> -->
+
+</robot>

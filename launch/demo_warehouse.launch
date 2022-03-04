@@ -6,17 +6,16 @@
 
   <!-- launch gazebo world -->
   <include file="$(find fkie_gazebo_worlds_icra2022)/launch/gazebo.launch">
-    <arg name="capability_group" value="base"/>
+    <arg name="capability_group" value="gazebo-sim"/>
     <arg name="world_name" value="$(arg world_name)"/>
     <arg name="gui" value="$(arg gui)"/>
   </include>
 
   <!-- Spawn mobile manipulator robot with husky base and panda arm -->
   <include file="$(find fkie_husky_manipulation_simulation)/launch/test.launch">
-  <arg name="robot_namespace" value="$(arg robot_namespace)"/>
-    <arg name="capability_group" value="base"/>
+    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+    <arg name="capability_group" value="mobile-manip-sim"/>
   </include>
-
 
   <node if="$(arg show_rviz)" name="rviz_husky_arm" pkg="rviz" type="rviz" ex-launch-prefix="gdb -ex run --args" args="-d $(find fkie_husky_manipulation_simulation)/rviz/husky_manipulation.rviz">
     <param name="capability_group" value="rviz"/>
