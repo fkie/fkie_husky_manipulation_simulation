@@ -8,7 +8,7 @@
   <xacro:panda_arm arm_id="panda" connected_to="panda_mount_link"/>
 
   <joint name="panda_mount_joint" type="fixed">
-    <origin xyz="0.389 0 0.23135" rpy="0 0 0"/>
+    <origin xyz="0.1 0.0 0.23135" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="panda_mount_link" />
   </joint>

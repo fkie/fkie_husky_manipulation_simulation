@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /TF1
+        - /TF1/Frames1
         - /RobotModel1
         - /RobotState1
       Splitter Ratio: 0.4650077819824219
@@ -58,57 +60,61 @@ Visualization Manager:
       Enabled: true
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
         base_footprint:
+          Value: false
+        base_laser:
+          Value: false
+        base_laser_mount:
           Value: true
         base_link:
-          Value: true
+          Value: false
         front_bumper_link:
-          Value: true
+          Value: false
         front_left_wheel_link:
-          Value: true
+          Value: false
         front_right_wheel_link:
-          Value: true
-        husky/odom:
-          Value: true
+          Value: false
         imu_link:
-          Value: true
+          Value: false
         inertial_link:
-          Value: true
+          Value: false
+        odom:
+          Value: false
         panda_link0:
-          Value: true
+          Value: false
         panda_link1:
-          Value: true
+          Value: false
         panda_link2:
-          Value: true
+          Value: false
         panda_link3:
-          Value: true
+          Value: false
         panda_link4:
-          Value: true
+          Value: false
         panda_link5:
-          Value: true
+          Value: false
         panda_link6:
-          Value: true
+          Value: false
         panda_link7:
-          Value: true
+          Value: false
         panda_link8:
-          Value: true
+          Value: false
         panda_mount_link:
           Value: true
         rear_bumper_link:
-          Value: true
+          Value: false
         rear_left_wheel_link:
-          Value: true
+          Value: false
         rear_right_wheel_link:
-          Value: true
+          Value: false
         top_chassis_link:
-          Value: true
+          Value: false
         top_plate_front_link:
-          Value: true
+          Value: false
         top_plate_link:
-          Value: true
+          Value: false
         top_plate_rear_link:
-          Value: true
+          Value: false
         world:
           Value: true
       Marker Scale: 1
@@ -118,7 +124,7 @@ Visualization Manager:
       Show Names: true
       Tree:
         world:
-          husky/odom:
+          odom:
             base_link:
               base_footprint:
                 {}
@@ -152,6 +158,9 @@ Visualization Manager:
               top_chassis_link:
                 {}
               top_plate_link:
+                base_laser_mount:
+                  base_laser:
+                    {}
                 top_plate_front_link:
                   {}
                 top_plate_rear_link:
@@ -172,6 +181,16 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        base_laser:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_laser_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_link:
           Alpha: 1
           Show Axes: false
@@ -244,6 +263,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         panda_mount_link:
           Alpha: 1
           Show Axes: false
@@ -301,6 +321,16 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        base_laser:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_laser_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_link:
           Alpha: 1
           Show Axes: false
@@ -373,6 +403,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+          Value: true
         panda_mount_link:
           Alpha: 1
           Show Axes: false
@@ -446,25 +477,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 7.558797359466553
+      Distance: 0.03638455271720886
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 3.239933490753174
-        Y: 3.194631814956665
-        Z: -0.982437252998352
+        X: 0.4128371775150299
+        Y: 1.2818864583969116
+        Z: 0.7004679441452026
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.2197968065738678
+      Pitch: 0.36479702591896057
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.962179183959961
+      Yaw: 1.619009017944336
     Saved: ~
 Window Geometry:
   Displays:
