@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="husky_panda">
   <xacro:arg name="robot_namespace" default="husky" />
+  <xacro:arg name="realsense_d435_enabled" default="true" />
+
   <xacro:include filename="$(find fkie_husky_manipulation_simulation)/urdf/husky.urdf.xacro" />
   <xacro:include filename="$(find fkie_husky_manipulation_simulation)/urdf/utils.xacro" />
   <xacro:include filename="$(find fkie_husky_manipulation_simulation)/urdf/panda_gazebo.xacro" />
@@ -104,35 +106,41 @@
     <enable_wind>false</enable_wind>
   </gazebo>
 
-  <!-- <gazebo>
-    <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
-      <robotNamespace>$(arg robot_namespace)</robotNamespace>
-      <updateRate>50.0</updateRate>
-      <bodyName>base_link</bodyName>
-      <topicName>imu/data</topicName>
-      <accelDrift>0.005 0.005 0.005</accelDrift>
-      <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-      <rateDrift>0.005 0.005 0.005 </rateDrift>
-      <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-      <headingDrift>0.005</headingDrift>
-      <headingGaussianNoise>0.005</headingGaussianNoise>
-    </plugin>
-  </gazebo>
+  <!-- D435: Realsense camera on panda_link8 -->
+  <xacro:if value="$(arg realsense_d435_enabled)">
+    <joint name="realsense_mount_joint" type="fixed">
+      <parent link="panda_link8"/>
+      <child link="realsense_mount_link"/>
+      <!-- On the original robot the tilt is 10 degrees with a new mount -->
+      <origin xyz="0.06 -0.008 0.0414" rpy="0 -0.17 0" />
+    </joint>
 
-  <gazebo>
-    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
-      <robotNamespace>$(arg robot_namespace)</robotNamespace>
-      <updateRate>40</updateRate>
-      <bodyName>base_link</bodyName>
-      <frameId>base_link</frameId>
-      <topicName>navsat/fix</topicName>
-      <velocityTopicName>navsat/vel</velocityTopicName>
-      <referenceLatitude>49.9</referenceLatitude>
-      <referenceLongitude>8.9</referenceLongitude>
-      <referenceHeading>0</referenceHeading>
-      <referenceAltitude>0</referenceAltitude>
-      <drift>0.0001 0.0001 0.0001</drift>
-    </plugin>
-  </gazebo> -->
+    <link name="realsense_mount_link">
+      <visual>
+        <origin xyz="0.004 0 0.0055" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.065 0.042 0.011"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1.0 0.0 0.0 1"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.004 0 0.0055" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.065 0.042 0.011"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <xacro:include filename="$(find fkie_realsense_description)/urdf/_d435.urdf.xacro" />
+    <xacro:sensor_d435 name="realsense" parent="realsense_mount_link">
+      <origin xyz="-0.01 -0.0115 0.012" rpy="0 0 0"/>
+    </xacro:sensor_d435>
+    <xacro:include filename="$(find fkie_realsense_description)/urdf/d435.gazebo.xacro"/>
+    <xacro:d435_gazebo_extensions name="realsense">
+    </xacro:d435_gazebo_extensions>
+
+  </xacro:if>
 
 </robot>

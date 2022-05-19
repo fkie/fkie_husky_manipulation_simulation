@@ -4,7 +4,9 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Global Options1
         - /TF1/Frames1
+        - /RobotModel1/Links1
       Splitter Ratio: 0.4650077819824219
     Tree Height: 995
   - Class: rviz/Selection
@@ -93,9 +95,31 @@ Visualization Manager:
         panda_link7:
           Value: false
         panda_link8:
-          Value: false
+          Value: true
         panda_mount_link:
           Value: false
+        realsense_bottom_screw_frame:
+          Value: true
+        realsense_color_frame:
+          Value: true
+        realsense_color_optical_frame:
+          Value: true
+        realsense_depth_frame:
+          Value: true
+        realsense_depth_optical_frame:
+          Value: true
+        realsense_left_ir_frame:
+          Value: true
+        realsense_left_ir_optical_frame:
+          Value: true
+        realsense_link:
+          Value: true
+        realsense_mount_link:
+          Value: true
+        realsense_right_ir_frame:
+          Value: true
+        realsense_right_ir_optical_frame:
+          Value: true
         rear_bumper_link:
           Value: false
         rear_left_wheel_link:
@@ -150,7 +174,21 @@ Visualization Manager:
                             panda_link6:
                               panda_link7:
                                 panda_link8:
-                                  {}
+                                  realsense_mount_link:
+                                    realsense_bottom_screw_frame:
+                                      realsense_link:
+                                        realsense_depth_frame:
+                                          realsense_color_frame:
+                                            realsense_color_optical_frame:
+                                              {}
+                                          realsense_depth_optical_frame:
+                                            {}
+                                          realsense_left_ir_frame:
+                                            realsense_left_ir_optical_frame:
+                                              {}
+                                          realsense_right_ir_frame:
+                                            realsense_right_ir_optical_frame:
+                                              {}
               rear_bumper_link:
                 {}
               rear_left_wheel_link:
@@ -266,6 +304,52 @@ Visualization Manager:
           Show Trail: false
           Value: true
         panda_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_bottom_screw_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_color_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_color_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_left_ir_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_left_ir_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        realsense_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        realsense_right_ir_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_right_ir_optical_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -414,6 +498,52 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        realsense_bottom_screw_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_color_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_color_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_left_ir_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_left_ir_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        realsense_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        realsense_right_ir_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        realsense_right_ir_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         rear_bumper_link:
           Alpha: 1
           Show Axes: false
@@ -516,9 +646,22 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Class: jsk_rviz_plugin/OverlayImage
+      Enabled: true
+      Name: OverlayImage
+      Topic: /realsense/color/image_raw
+      Value: true
+      alpha: 0.800000011920929
+      height: 128
+      keep aspect ratio: true
+      left: 0
+      overwrite alpha value: false
+      top: 10
+      transport hint: raw
+      width: 300
   Enabled: true
   Global Options:
-    Background Color: 46; 52; 54
+    Background Color: 255; 255; 255
     Default Light: true
     Fixed Frame: world
     Frame Rate: 30
@@ -544,7 +687,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 13.715656280517578
+      Distance: 9.055025100708008
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -560,9 +703,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8497969508171082
+      Pitch: 0.3647962212562561
       Target Frame: <Fixed Frame>
-      Yaw: 1.9440045356750488
+      Yaw: 4.692174911499023
     Saved: ~
 Window Geometry:
   Displays:
@@ -580,5 +723,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1920
-  X: 0
+  X: 1920
   Y: 30

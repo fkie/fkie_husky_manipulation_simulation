@@ -1,5 +1,6 @@
 <launch>
       <arg name="robot_namespace" default="husky"/>
+      <arg name="realsense_d435_enabled" default="true"/>
       <arg name="global_frame" default="/world"/>
       <arg name="capability_group" default="sim-robot"/>
       <arg name="use_gripper" default="false" doc="Should a franka hand be mounted on the flange?" />
@@ -21,7 +22,7 @@
 
       <group ns="$(arg robot_namespace)">
             <!-- Load robot description  -->
-            <param name="robot_description" command="xacro $(find fkie_husky_manipulation_simulation)/urdf/husky_panda.urdf.xacro robot_namespace:=$(arg robot_namespace)">
+            <param name="robot_description" command="xacro $(find fkie_husky_manipulation_simulation)/urdf/husky_panda.urdf.xacro robot_namespace:=$(arg robot_namespace) realsense_d435_enabled:=$(arg realsense_d435_enabled)">
             </param>
 
             <!-- Convert joint states to TF  -->
@@ -58,10 +59,6 @@
                   <param name="capability_group" value="$(arg capability_group)"/>
                   <param name="nm/kill_on_stop" value="300"/>
             </node>
-
-
-
-
       </group>
 
 </launch>
