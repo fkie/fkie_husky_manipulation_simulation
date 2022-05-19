@@ -1,0 +1,29 @@
+<launch>
+    <arg name="capability_group" default="simulation"/>
+    <arg name="world_name" default="empty.world"/>
+    <arg name="paused" default="false"/>
+    <arg name="gui" default="false"/>
+    <arg name="debug" default="false"/>
+
+    <!-- launch gazebo world -->
+    <env name="GAZEBO_MODEL_PATH" value="$(find fkie_husky_manipulation_simulation)/models"/>
+    <env name="GAZEBO_MODEL_DATABASE_URI" value=""/>
+
+    <param name="gazebo/nm/kill_on_stop" value="300"/>
+    <param name="gazebo_gui/nm/kill_on_stop" value="300"/>
+    <param name="gazebo/kill_on_stop" value="300"/>
+    <param name="gazebo_gui/kill_on_stop" value="300"/>
+
+    <param name="gazebo/capability_group" value="$(arg capability_group)"/>
+    <param name="gazebo_gui/capability_group" value="$(arg capability_group)"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find fkie_husky_manipulation_simulation)/worlds/$(arg world_name)"/>
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="extra_gazebo_args" value="--verbose"/>
+    </include>
+</launch>
