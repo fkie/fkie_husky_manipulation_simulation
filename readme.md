@@ -21,7 +21,9 @@ sudo apt install ros-noetic-franka-description ros-noetic-gazebo-ros-control ros
 
 ```console
 cd <your_ros_workspace>/src
-git clone https://github.com/fkie/fkie_realsense_description  https://github.com/fkie/realsense_gazebo_plugin https://github.com/fkie/fkie_husky_manipulation_simulation
+git clone https://github.com/fkie/fkie_realsense_description
+git clone https://github.com/fkie/realsense_gazebo_plugin
+git clone https://github.com/fkie/fkie_husky_manipulation_simulation
 catkin build fkie_husky_manipulation_simulation
 ```
 ## Try it out!
