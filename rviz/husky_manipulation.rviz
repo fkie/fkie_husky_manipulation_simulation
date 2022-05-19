@@ -4,12 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
-        - /TF1
         - /TF1/Frames1
-        - /RobotModel1
-        - /RobotState1
       Splitter Ratio: 0.4650077819824219
     Tree Height: 995
   - Class: rviz/Selection
@@ -30,7 +25,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScanFront
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -63,10 +58,6 @@ Visualization Manager:
         All Enabled: false
         base_footprint:
           Value: false
-        base_laser:
-          Value: false
-        base_laser_mount:
-          Value: true
         base_link:
           Value: false
         front_bumper_link:
@@ -78,6 +69,10 @@ Visualization Manager:
         imu_link:
           Value: false
         inertial_link:
+          Value: false
+        laser_front:
+          Value: false
+        laser_rear:
           Value: false
         odom:
           Value: false
@@ -100,7 +95,7 @@ Visualization Manager:
         panda_link8:
           Value: false
         panda_mount_link:
-          Value: true
+          Value: false
         rear_bumper_link:
           Value: false
         rear_left_wheel_link:
@@ -115,8 +110,11 @@ Visualization Manager:
           Value: false
         top_plate_rear_link:
           Value: false
+        user_rail_link:
+          Value: false
         world:
-          Value: true
+          Value: false
+      Marker Alpha: 1
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -138,6 +136,10 @@ Visualization Manager:
                 {}
               inertial_link:
                 {}
+              laser_front:
+                {}
+              laser_rear:
+                {}
               panda_mount_link:
                 panda_link0:
                   panda_link1:
@@ -158,13 +160,12 @@ Visualization Manager:
               top_chassis_link:
                 {}
               top_plate_link:
-                base_laser_mount:
-                  base_laser:
-                    {}
                 top_plate_front_link:
                   {}
                 top_plate_rear_link:
                   {}
+              user_rail_link:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -181,16 +182,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        base_laser:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_laser_mount:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         base_link:
           Alpha: 1
           Show Axes: false
@@ -219,6 +210,16 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        laser_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        laser_rear:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         panda_link0:
           Alpha: 1
           Show Axes: false
@@ -301,6 +302,11 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        user_rail_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: /husky/robot_description
       TF Prefix: ""
@@ -321,16 +327,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        base_laser:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_laser_mount:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         base_link:
           Alpha: 1
           Show Axes: false
@@ -359,6 +355,16 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        laser_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        laser_rear:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         panda_link0:
           Alpha: 1
           Show Axes: false
@@ -441,6 +447,11 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        user_rail_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotState
       Robot Alpha: 1
       Robot Description: husky/robot_description
@@ -449,6 +460,62 @@ Visualization Manager:
       Show Highlights: true
       Value: true
       Visual Enabled: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 164; 0; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 204; 0; 0
+      Min Color: 0; 0; 0
+      Name: LaserScanFront
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: false
+      Size (Pixels): 3
+      Size (m): 0.029999999329447746
+      Style: Flat Squares
+      Topic: /husky/laser_front
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 206; 92; 0
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 78; 154; 6
+      Min Color: 0; 0; 0
+      Name: LaserScanRear
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.029999999329447746
+      Style: Flat Squares
+      Topic: /husky/laser_rear
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 46; 52; 54
@@ -477,25 +544,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.03638455271720886
+      Distance: 13.715656280517578
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
+      Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.4128371775150299
-        Y: 1.2818864583969116
-        Z: 0.7004679441452026
+        X: -0.09632540494203568
+        Y: 0.95950847864151
+        Z: 0.6052646040916443
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.36479702591896057
+      Pitch: 0.8497969508171082
       Target Frame: <Fixed Frame>
-      Value: Orbit (rviz)
-      Yaw: 1.619009017944336
+      Yaw: 1.9440045356750488
     Saved: ~
 Window Geometry:
   Displays:

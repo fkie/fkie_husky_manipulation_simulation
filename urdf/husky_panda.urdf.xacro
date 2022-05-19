@@ -30,6 +30,80 @@
     </plugin>
   </gazebo>
 
+  <!-- Laser properties -->
+  <xacro:property name="laser_update_rate" value="10.0" />
+  <xacro:property name="laser_max_range" value="30.0" />
+  <xacro:property name="laser_samples" value="720" />
+
+  <!-- add lasers -->
+  <gazebo reference="laser_rear">
+    <turnGravityOff>false</turnGravityOff>
+    <sensor type="gpu_ray" name="laser_rear">
+      <update_rate>${laser_update_rate}</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>${laser_samples}</samples>
+            <resolution>1</resolution>
+            <min_angle>${M_PI * 0.03}</min_angle>
+            <max_angle>${M_PI * 0.97}</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.2</min>
+          <max>${laser_max_range}</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_planar_lidar" filename="libgazebo_ros_gpu_laser.so">
+        <topicName>laser_rear</topicName>
+        <frameName>laser_rear</frameName>
+        <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="laser_front">
+    <turnGravityOff>false</turnGravityOff>
+    <sensor type="gpu_ray" name="laser_front">
+      <update_rate>${laser_update_rate}</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>${laser_samples}</samples>
+            <resolution>1</resolution>
+            <min_angle>${M_PI}</min_angle>
+            <max_angle>${M_PI *2.0}</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.2</min>
+          <max>${laser_max_range}</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_planar_lidar" filename="libgazebo_ros_gpu_laser.so">
+        <topicName>laser_front</topicName>
+        <frameName>laser_front</frameName>
+        <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo>
+    <enable_wind>false</enable_wind>
+  </gazebo>
+
   <!-- <gazebo>
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
       <robotNamespace>$(arg robot_namespace)</robotNamespace>
@@ -62,4 +136,3 @@
   </gazebo> -->
 
 </robot>
-
