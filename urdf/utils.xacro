@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-
   <!-- ========================================================== -->
   <!-- Adds the required tags to simulate one joint in gazebo     -->
   <!--                                                            -->
@@ -50,42 +48,4 @@
       </collision>
     </gazebo>
   </xacro:macro>
-
-  <!-- <gazebo reference="panda_link0">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo>
-  <gazebo reference="panda_link1">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo>
-  <gazebo reference="panda_link2">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo>
-  <gazebo reference="panda_link3">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo>
-  <gazebo reference="panda_link4">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo>
-  <gazebo reference="panda_link5">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo>
-  <gazebo reference="panda_link6">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo>
-  <gazebo reference="panda_link7">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo>
-  <gazebo reference="panda_link8">
-    <mu1>0.61</mu1>
-    <mu2>0.61</mu2>
-  </gazebo> -->
-
 </robot>
