@@ -16,8 +16,7 @@ This package has been tested on Ubuntu 20.04 and ROS Noetic with Gazebo 11.
 sudo apt install ros-noetic-franka-description ros-noetic-gazebo-ros-control ros-noetic-gazebo-ros-pkgs ros-noetic-husky-control ros-noetic-husky-description ros-noetic-jsk-rviz-plugins ros-noetic-ros-control
 ```
 
-- Clone and build the following packages with catkin build. 
-  https://github.com/fkie/fkie_realsense_description https://github.com/fkie/realsense_gazebo_plugin https://github.com/fkie/fkie_husky_manipulation_simulation
+- Clone and build the following packages with catkin build.
 
 ```console
 cd <your_ros_workspace>/src
