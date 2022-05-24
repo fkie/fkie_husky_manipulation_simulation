@@ -31,5 +31,8 @@
   <exec_depend>dwa_local_planner</exec_depend>
   <exec_depend>base_local_planner</exec_depend>
   <exec_depend>teb_local_planner</exec_depend>
-  
+  <exec_depend>mbf_costmap_nav</exec_depend>
+  <exec_depend>global_planner</exec_depend>
+  <exec_depend>moveit_simple_controller_manager</exec_depend>
+
 </package>

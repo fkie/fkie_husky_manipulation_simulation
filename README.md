@@ -10,13 +10,13 @@ The <code>fkie_husky_manipulation_simulation</code> package simulates a husky ro
 This package has been tested on Ubuntu 20.04 and ROS Noetic with Gazebo 11.
 
 ## Installation
-- Install all the dependencies
+- Install dependencies:
 
 ```console
-sudo apt install ros-noetic-franka-description ros-noetic-gazebo-ros-control ros-noetic-gazebo-ros-pkgs ros-noetic-husky-control ros-noetic-husky-description ros-noetic-jsk-rviz-plugins ros-noetic-ros-control ros-noetic-twist-recovery ros-noetic-dwa-local-planner ros-noetic-teb-local-planner
+sudo apt install ros-noetic-franka-description ros-noetic-gazebo-ros-control ros-noetic-gazebo-ros-pkgs ros-noetic-husky-control ros-noetic-husky-description ros-noetic-jsk-rviz-plugins ros-noetic-ros-control ros-noetic-twist-recovery ros-noetic-dwa-local-planner ros-noetic-teb-local-planner ros-noetic-panda-moveit-config ros-noetic-mbf-costmap-nav ros-noetic-moveit-simple-controller-manager ros-noetic-global-planner
 ```
 
-- Clone and build the following packages with catkin build.
+- Clone and build required packages:
 
 ```console
 cd <your_ros_workspace>/src
@@ -25,16 +25,19 @@ git clone https://github.com/fkie/realsense_gazebo_plugin
 git clone https://github.com/fkie/fkie_behavior_trees
 git clone https://github.com/fkie/fkie_husky_manipulation_simulation
 
-catkin build fkie_husky_manipulation_simulation
+catkin build
 ```
 ## Try it out!
 
-We highly recommend using [fkie_node_manager](https://github.com/fkie/multimaster_fkie/tree/master/fkie_node_manager) for managing the ROS nodes. 
+The file ```demo_warehouse.launch``` launches husky robot base with a panda arm in an warehouse environment used in the RA-L [publication](https://ieeexplore.ieee.org/abstract/document/9695293).
 
-- ```demo_warehouse.launch```: Launches husky robot base with a panda arm in an warehouse environment used in the RA-L [publication](https://ieeexplore.ieee.org/abstract/document/9695293).
-```
+```console
+cd ros/
+source devel/setup.bash
 roslaunch fkie_husky_manipulation_simulation demo_warehouse.launch
 ```
+
+Note: We highly recommend using [fkie_node_manager](https://github.com/fkie/multimaster_fkie/tree/master/fkie_node_manager) for starting and managing the ROS nodes. 
 
 ## Acknowledgements
 
