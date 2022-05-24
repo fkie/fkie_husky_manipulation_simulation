@@ -17,7 +17,7 @@ husky_velocity_controller:
 
   # Odometry fused with IMU is published by robot_localization, so
   # no need to publish a TF based on encoders alone.
-  enable_odom_tf: false
+  enable_odom_tf: true
 
   # Husky hardware provides wheel velocities
   estimate_velocity_from_position: false
@@ -45,7 +45,7 @@ joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 50
         
-panda_arm_controller:
+position_joint_trajectory_controller:
   type: effort_controllers/JointTrajectoryController
     
   state_publish_rate: 25
@@ -67,6 +67,7 @@ panda_arm_controller:
     panda_joint5: { p: 250, d: 10, i: 0 }
     panda_joint6: { p: 150, d: 10, i: 0 }
     panda_joint7: { p: 50, d: 5, i: 0 }
+    
   constraints:
     goal_time: 0.5
     panda_joint1: { goal: 0.05 }

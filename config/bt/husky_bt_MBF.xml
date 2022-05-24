@@ -1,0 +1,64 @@
+<root main_tree_to_execute="navigation_tree">
+  <BehaviorTree ID="navigation_tree">
+      <Sequence name="main">
+
+        <!--  check if a new goal pose has been received -->
+        <Fallback>
+          <Condition name="receive_goal" ID="PoseReceived" target_pose="{target_pose}"/>
+          <ForceFailure>
+            <!-- Any/invalid pose, stop navigation -->
+            <Action name="cancel_goals" ID="CancelExePathSync" path="{path}" target_pose="{target_pose}" />
+          </ForceFailure>
+        </Fallback>
+
+        <!-- If new goal is available, run global planning -->
+        <Sequence name="subtree_global_planning">
+          <Action name="clear_costmap" ID="ServiceEmptyAction" />
+          <Fallback>
+            <Action name="compute_global_path" ID="MoveBase_GetPath" planner="GlobalPlanner" target_pose="{target_pose}" path="{path}" nav_error_code="{nav_error_code}"/>
+            <Action name="notify_error_global_path" ID="MoveBase_NotifyNavigationResult" nav_error_code="{nav_error_code}"/>
+          </Fallback>
+        </Sequence>
+
+        <!-- If a global path is available, run local navigation and parallel conditions for stopping the process (reactiveness) -->
+        <Sequence name="subtree_local_navigation">
+          <Parallel success_threshold="1" failure_threshold="3">
+            <!-- threshold="1" means: as soon as one child finished, stop the parallel subtree and halt running children -->
+
+            <!-- Main local navigation subtree -->
+            <Fallback>
+              <RetryUntilSuccessful num_attempts="3">
+                <Fallback>
+                  <Action name="navigate_path_to_goal" ID="MoveBase_ExePathAsync" controller="teb" path="{path}" target_pose="{target_pose}" nav_error_code="{nav_error_code}"/>
+
+                  <!-- Succesfull execution of recoveries does not imply succesfull navigation -->
+                  <!-- Instead, force [Failure] and retry again navigation -->
+                  <ForceFailure>
+                    <Sequence name="recoveries">
+                      <Action name="recovery_clear_costmap" ID="MoveBase_Recovery" strategy="clear_costmap"/>
+                      <Action name="recovery_twist" ID="MoveBase_Recovery" strategy="twist_recovery"/>
+                      <Action name="compute_global_path" ID="MoveBase_GetPath" planner="GlobalPlanner" target_pose="{target_pose}" path="{path}" nav_error_code="ignore"/>
+                    </Sequence>
+                  </ForceFailure>
+                </Fallback>
+              </RetryUntilSuccessful>
+              <Action name="notify_error_local_navigation" ID="MoveBase_NotifyNavigationResult" nav_error_code="{nav_error_code}"/>
+            </Fallback>
+
+            <!-- Reset condition 1: check if a new goal was given before finishing current navigation -->
+            <Condition name="new_goal_pose_received" ID="WaitForGenericMsgAsyncAction"/>
+
+            <!-- Reset condition 2: check if a reset message was given before finishing current navigation -->
+            <Condition name="reset_command_from_operator" ID="WaitForGenericMsgAsyncAction"/>
+
+            <!-- Reset condition n: Add more reset conditions here... -->
+
+          </Parallel>
+
+          <!-- Notify the final result of the local navigation -->
+          <Action name="notify_succesfull_navigation" ID="MoveBase_NotifyNavigationResult" nav_error_code="{nav_error_code}"/>
+        </Sequence>
+
+      </Sequence>
+  </BehaviorTree>
+</root>

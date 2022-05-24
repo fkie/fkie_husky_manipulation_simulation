@@ -1,0 +1,27 @@
+global_costmap:
+  update_frequency: 5.0
+  publish_frequency: 1.0
+  rolling_window: true
+  width: 30.0
+  height: 30.0
+  resolution: 0.1
+  origin_x: 0.0
+  origin_y: 0.0
+ 
+  footprint_padding: 0.3
+  footprint: [
+    [-0.40, 0.25], [0.45, 0.25], [0.45, -0.25], [-0.40, -0.25], # outer loop
+  ]
+
+  inflation_layer:
+    enabled: true
+    inflation_radius: 0.5
+    cost_scaling_factor: 2.0
+    inflate_unknown: true
+
+  #obstacle_layer:
+  #  enabled: true
+  #  footprint_clearing_enable: false
+  #  track_unknown_space: true
+  #  observation_sources: laser_front laser_rear
+

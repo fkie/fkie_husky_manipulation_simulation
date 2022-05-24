@@ -1,0 +1,12 @@
+recovery_behaviors:
+  - name: 'clear_costmap'
+    type: 'clear_costmap_recovery/ClearCostmapRecovery'
+  - name: 'twist_recovery'
+    type: 'twist_recovery/TwistRecovery'
+
+twist_recovery:
+  # Configuration for version of this recovery where we back up slowly about half a meter
+  linear_x: -0.3
+  linear_y: 0.0
+  angular_z: 0.1
+  duration: 2.5

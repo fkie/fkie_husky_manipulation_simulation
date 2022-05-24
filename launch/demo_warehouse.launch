@@ -1,25 +1,24 @@
 <launch>
+  <arg name="robot_namespace" default="husky"/>
   <arg name="world_name" default="warehouse_icra_large.world"/>
   <arg name="show_rviz" default="true"/>
   <arg name="gui" default="true"/>
-  <arg name="robot_namespace" default="husky"/>
 
   <!-- launch gazebo world -->
-  <include file="$(find fkie_husky_manipulation_simulation)/launch/gazebo.launch">
+  <include file="$(find fkie_husky_manipulation_simulation)/launch/includes/gazebo.launch">
     <arg name="capability_group" value="gazebo-sim"/>
     <arg name="world_name" value="$(arg world_name)"/>
     <arg name="gui" value="$(arg gui)"/>
   </include>
 
   <!-- Spawn mobile manipulator robot with husky base and panda arm -->
-  <include file="$(find fkie_husky_manipulation_simulation)/launch/spawn_mobile_manip.launch">
+  <include file="$(find fkie_husky_manipulation_simulation)/launch/includes/spawn_mobile_manipulator.launch">
     <arg name="robot_namespace" value="$(arg robot_namespace)"/>
     <arg name="capability_group" value="mobile-manip-sim"/>
   </include>
 
-  <node if="$(arg show_rviz)" name="rviz_husky_arm" pkg="rviz" type="rviz" ex-launch-prefix="gdb -ex run --args" args="-d $(find fkie_husky_manipulation_simulation)/rviz/husky_manipulation.rviz">
+  <node if="$(arg show_rviz)" name="rviz_husky_arm" pkg="rviz" type="rviz" no-launch-prefix="gdb -ex run --args" args="-d $(find fkie_husky_manipulation_simulation)/config/rviz/husky_manipulation.rviz">
     <param name="capability_group" value="rviz"/>
   </node>
-
 
 </launch>

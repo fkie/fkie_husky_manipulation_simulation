@@ -1,0 +1,123 @@
+<launch>
+      <arg name="robot_namespace" default="husky"/>
+      <arg name="realsense_d435_enabled" default="true"/>
+      <arg name="launch_rviz_moveit" default="false"/>
+      <arg name="global_frame" default="/world"/>
+      <arg name="capability_group" default="sim-robot"/>
+      <arg name="use_gripper" default="false" doc="Should a franka hand be mounted on the flange?" />
+      <arg name="controller" default=" "/>
+      <arg name="paused" default="false" doc="Should the simulation directly be stopped at 0s?" />
+      <arg name="arm_id" default="panda" doc="Name of the panda robot to spawn" />
+      <arg name="x" default="6" doc="How far forward to place the base of the husky robot in [m]?" />
+      <arg name="y" default="-15" doc="How far leftwards to place the base of the husky robot in [m]?" />
+      <arg name="z" default="0.15" doc="How far upwards to place the base of the husky robot in [m]?" />
+      <arg name="yaw" default="2.626509" doc="How much to rotate the base of the husky robot around its Z-axis in [rad]?" />
+      <arg name="initial_joint_positions" doc="Initial joint configuration of the panda. Specify as a list of name/value pairs in form of '-J [name-of-joint] [value-in-rad]'. Default is a 90 degree bend in the elbow" default="-J $(arg arm_id)_joint1 0
+                -J $(arg arm_id)_joint2 0
+                -J $(arg arm_id)_joint3 0
+                -J $(arg arm_id)_joint4 -1.57079632679
+                -J $(arg arm_id)_joint5 0
+                -J $(arg arm_id)_joint6 1.57079632679
+                -J $(arg arm_id)_joint7 0.785398163397
+             " />
+
+      <group ns="$(arg robot_namespace)">
+            <!-- Load robot description  -->
+            <param name="robot_description" command="xacro $(find fkie_husky_manipulation_simulation)/urdf/husky_panda.urdf.xacro robot_namespace:=$(arg robot_namespace) realsense_d435_enabled:=$(arg realsense_d435_enabled)" />
+
+            <!-- Convert joint states to TF  -->
+            <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" clear_params="true">
+                  <param name="capability_group" value="$(arg capability_group)"/>
+                  <param name="nm/kill_on_stop" value="300"/>
+            </node>
+
+            <!-- Load the controller configs  -->
+            <rosparam file="$(find fkie_husky_manipulation_simulation)/config/husky_panda.yaml" command="load"/>
+
+            <arg name="unpause" value="$(eval '' if arg('paused') else '-unpause')" />
+
+            <!--  Spawn the robot   -->
+            <node name="$(arg robot_namespace)_$(arg arm_id)_full_model_spawner" pkg="gazebo_ros" type="spawn_model" args="-x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)
+              -param /$(arg robot_namespace)/robot_description -urdf -model $(arg robot_namespace) $(arg unpause) $(arg initial_joint_positions)">
+                  <param name="capability_group" value="$(arg capability_group)"/>
+                  <param name="nm/kill_on_stop" value="300"/>
+            </node>
+
+            <node name="$(arg robot_namespace)_$(arg arm_id)_controller_spawner" pkg="controller_manager" type="spawner" output="screen" args="husky_velocity_controller husky_joint_publisher joint_state_controller position_joint_trajectory_controller">
+                  <param name="capability_group" value="$(arg capability_group)"/>
+                  <param name="nm/kill_on_stop" value="300"/>
+            </node>
+
+            <!-- Add static transform between odom and world  -->
+            <node name="$(arg robot_namespace)_static_tf_world_odom" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 $(arg global_frame) odom">
+                  <param name="capability_group" value="$(arg capability_group)"/>
+                  <param name="nm/kill_on_stop" value="300"/>
+            </node>
+
+            <!-- MoveIt!-->
+            <include file="$(find panda_moveit_config)/launch/planning_context.launch">
+                  <arg name="load_robot_description" value="false"/>
+                  <arg name="load_gripper" value="false" />
+            </include>
+
+            <!-- MoveIt! Main -->
+            <include file="$(find panda_moveit_config)/launch/move_group.launch">
+                  <arg name="info" value="true"/>
+                  <arg name="debug" value="false"/>
+            </include>
+
+            <!-- load behavior tree manager -->
+            <node name="$(arg robot_namespace)_bt_navigation" pkg="fkie_behavior_tree_manager" type="behavior_tree_manager_node" clear_params="true">
+                  <param name="capability_group" value="$(arg capability_group)"/>
+                  <param name="nm/kill_on_stop" value="200"/>
+                  <param name="tree/static_file" value="$(find fkie_husky_manipulation_simulation)/config/bt/husky_bt_MBF.xml"/>
+                  <rosparam command="load" file="$(find fkie_husky_manipulation_simulation)/config/bt/husky_bt_MBF.yaml"/>
+            </node>
+
+            <!-- Move Base Flex -->
+            <node name="$(arg robot_namespace)_mbf" pkg="mbf_costmap_nav" type="mbf_costmap_nav" clear_params="true" output="screen">
+                  <param name="capability_group" value="$(arg capability_group)"/>
+                  <param name="nm/kill_on_stop" value="200"/>
+                  <param name="robot_frame" value="base_link"/>
+                  <param name="global_frame" value="world"/>
+                  <param name="map_frame" value="world"/>
+                  <param name="odom_frame" value="odom"/>
+                  <param name="tf_timeout" value="2.5"/>
+
+                  <param name="global_costmap/global_frame" value="world"/>
+                  <param name="global_costmap/robot_base_frame" value="base_link"/>
+                  <param name="global_costmap/laser_front/sensor_frame" value="laser_front"/>
+                  <param name="global_costmap/obstacle_layer/laser_front/sensor_frame" value="laser_front"/>
+
+                  <param name="local_costmap/global_frame" value="world"/>
+                  <param name="local_costmap/robot_base_frame" value="base_link"/>
+                  <param name="local_costmap/laser_front/sensor_frame" value="laser_front"/>
+                  <param name="local_costmap/obstacle_layer/laser_front/sensor_frame" value="laser_front"/>
+
+                  <rosparam file="$(find fkie_husky_manipulation_simulation)/config/mbf/controllers.yaml" command="load"/>
+                  <rosparam file="$(find fkie_husky_manipulation_simulation)/config/mbf/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+                  <rosparam file="$(find fkie_husky_manipulation_simulation)/config/mbf/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+                  <rosparam file="$(find fkie_husky_manipulation_simulation)/config/mbf/global_costmap_params.yaml" command="load"/>
+                  <rosparam file="$(find fkie_husky_manipulation_simulation)/config/mbf/local_costmap_params.yaml" command="load"/>
+                  <rosparam file="$(find fkie_husky_manipulation_simulation)/config/mbf/planners.yaml" command="load"/>
+                  <rosparam file="$(find fkie_husky_manipulation_simulation)/config/mbf/recovery_behaviors.yaml" command="load"/>
+
+                  <param name="MhaGlobalPlanner/primitive_filename" value="$(find fkie_husky_manipulation_simulation)/config/mbf/mprim/ceres_5cm.mprim"/>
+
+                  <remap from="cmd_vel" to="husky_velocity_controller/cmd_vel"/>
+                  <remap from="odom" to="$(arg robot_namespace)_velocity_controller/odom"/>
+                  <remap from="map" to="$(arg robot_namespace)_map"/>
+                  <remap from="move_base_simple/goal" to="nav_mux_pose_out"/>
+
+                  <!-- remap paths -->
+                  <remap from="$(arg robot_namespace)_mbf/GlobalPlanner/plan" to="$(arg robot_namespace)_mbf/global_plan"/>
+                  <remap from="$(arg robot_namespace)_mbf/navfn/plan" to="$(arg robot_namespace)_mbf/global_plan"/>
+                  <remap from="$(arg robot_namespace)_mbf/dwa/local_plan" to="$(arg robot_namespace)_mbf/local_plan"/>
+                  <remap from="$(arg robot_namespace)_mbf/dwa_fkie/local_plan" to="$(arg robot_namespace)_mbf/local_plan"/>
+                  <remap from="$(arg robot_namespace)_mbf/teb/local_plan" to="$(arg robot_namespace)_mbf/local_plan"/>
+                  <remap from="$(arg robot_namespace)_mbf/trajectory_planner/local_plan" to="$(arg robot_namespace)_mbf/local_plan"/>
+            </node>
+
+      </group>
+
+</launch>

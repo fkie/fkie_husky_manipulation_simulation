@@ -1,0 +1,45 @@
+tree:
+  rate: 2.0
+  
+logging:
+  RosMsgLogger:
+    enabled: true
+  PublisherZMQ:
+    enabled: true
+    max_msg_per_second: 15
+    publisher_port: 1666
+    server_port: 1667
+
+action_plugins:
+  [
+  "libMoveBaseActions_dyn.so"
+  ]
+
+MoveBaseActions:
+  topic_pose_reset: "/husky/navigation_goal"
+  frame_id_target_pose: "world"
+  wait_for_reach_goal: true
+  timeout_target_pose: 1.5
+
+  publish_confirmation: true
+  topic_confirmation: "/husky/husky_mbf/pose_reached"
+
+  topic_get_path: "/husky/husky_mbf/get_path"
+  topic_exe_path: "/husky/husky_mbf/exe_path"
+  topic_recovery_action: "/husky/husky_mbf/recovery"
+
+ServiceEmptyAction:
+  clear_costmap_topic_service: "/husky/husky_mbf/clear_costmaps"
+  clear_costmap_delay: 0.5
+
+PoseReceived:
+  receive_goal_topic_pose: "/husky/navigation_goal"
+
+WaitForGenericMsgAsyncAction:
+  new_goal_pose_received_topic_in: "/husky/navigation_goal"
+  new_goal_pose_received_timeout: -1.0
+
+  reset_command_from_operator_topic_in: "/husky/reset_navigation_cmd"
+  reset_command_from_operator_timeout: -1.0
+
+
