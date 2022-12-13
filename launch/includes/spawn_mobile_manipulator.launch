@@ -62,6 +62,7 @@
 
             <!-- MoveIt! Main -->
             <include file="$(find panda_moveit_config)/launch/move_group.launch">
+                  <arg name="load_robot_description" value="false"/>
                   <arg name="info" value="true"/>
                   <arg name="debug" value="false"/>
             </include>
